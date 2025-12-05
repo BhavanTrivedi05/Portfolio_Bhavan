@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bhavan Jignesh Trivedi — Portfolio</title>
+  <meta name="description" content="Bhavan Trivedi — MSCS at Northeastern University. Java Backend Developer, Cloud & Cybersecurity enthusiast." />
+  <style>
+    :root{
+      --bg:#0b1220; --card:#0f1724; --muted:#99a0b3; --accent:#2dd4bf; --text:#e6eef6;
+      --maxw:1000px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:var(--text);background:linear-gradient(180deg,#071019 0%,var(--bg) 100%);-webkit-font-smoothing:antialiased}
+    .container{max-width:var(--maxw);margin:0 auto;padding:28px}
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+    .brand{font-weight:700;font-size:1.15rem;letter-spacing:0.2px}
+    nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:0.95rem}
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:center;padding:40px 0}
+    .hero h1{font-size:2.1rem;margin:0 0 10px}
+    .hero p.lead{color:var(--muted);margin:0 0 18px;line-height:1.6}
+    .cta{display:flex;gap:12px}
+    .btn{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:600}
+    .btn.primary{background:var(--accent);color:#062023;border:none}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);padding:18px;border-radius:12px}
+    .avatar{height:120px;width:120px;border-radius:12px;background:linear-gradient(135deg,#0ea5a0,#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem}
+    section{margin-top:26px}
+    h2{margin:0 0 12px;font-size:1.1rem}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .projects{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .proj-title{font-weight:700;margin:0 0 6px}
+    .muted{color:var(--muted);font-size:0.95rem}
+    .skills{display:flex;flex-wrap:wrap;gap:10px}
+    .pill{background:rgba(255,255,255,0.03);padding:7px 10px;border-radius:999px;font-weight:600;color:var(--text);border:1px solid rgba(255,255,255,0.02);font-size:0.9rem}
+    footer{padding:30px 0;text-align:center;color:var(--muted);font-size:0.95rem}
+    @media (max-width:880px){.hero{grid-template-columns:1fr;}.projects,.grid{grid-template-columns:1fr}}
+    .meta{display:flex;gap:12px;color:var(--muted);font-size:0.95rem;align-items:center}
+    .experience .role{font-weight:700}
+    .project-card{padding:14px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border:1px solid rgba(255,255,255,0.03)}
+    .small{font-size:0.88rem;color:var(--muted)}
+    .right{display:flex;flex-direction:column;gap:12px}
+    .badge{display:inline-block;padding:6px 10px;border-radius:8px;background:rgba(45,212,191,0.12);color:var(--accent);font-weight:700;border:1px solid rgba(45,212,191,0.12)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">Bhavan J. Trivedi</div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <h1>Bhavan Jignesh Trivedi</h1>
+          <p class="lead">Master of Science in Computer Science — Northeastern University, Boston, MA. Focused on software development, backend systems, and cybersecurity fundamentals. Strong foundation in Java, Spring Boot, cloud, and security technologies.</p>
+
+          <div class="meta">
+            <div class="badge">Java • Backend • Cybersecurity</div>
+            <div class="small">Target roles: Software Engineer (Backend), Java Developer, Security Analyst, SDE Intern</div>
+          </div>
+
+          <div style="margin-top:18px" class="cta">
+            <a class="btn" href="https://github.com/BhavanTrivedi05" target="_blank">GitHub</a>
+            <a class="btn" href="https://www.linkedin.com/in/bhavan-trivedi-012714232/" target="_blank">LinkedIn</a>
+            <a class="btn primary" href="mailto:bhavantrivedi05@gmail.com">Email Me</a>
+          </div>
+        </div>
+
+        <aside class="right">
+          <div class="card" style="text-align:center">
+            <div class="avatar">BJT</div>
+            <div style="margin-top:12px" class="muted">MSCS — Northeastern University</div>
+            <div class="small" style="margin-top:8px">Boston, MA, USA</div>
+          </div>
+
+          <div class="card">
+            <div class="meta">Cybersecurity & Cloud focus</div>
+            <div class="small">Completed beginner-level courses: Cisco Packet Tracer, Intro to Cybersecurity, TCS IAM SDE Simulation. TCS Soft Skills certificate.</div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="about">
+        <h2>About</h2>
+        <div class="card">
+          <p class="muted">I am pursuing an MS in Computer Science at Northeastern University. I enjoy building backend systems and APIs using Java and Spring Boot. I also have a strong interest in cybersecurity, cloud computing, and related technologies. My approach focuses on clean code, system design, and production-ready solutions.</p>
+        </div>
+      </section>
+
+      <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects">
+
+          <div class="project-card">
+            <div class="proj-title">Expense Tracker (Web App)</div>
+            <div class="small muted">Spring Boot • Hibernate • MySQL • Java • Team project</div>
+            <p class="muted">Full-stack expense management system; backend APIs and persistence handled in Java + Hibernate. Frontend built by the team. Repository is currently private — I can make it public on request.</p>
+            <div class="small">Status: <strong>Private (can be made public)</strong></div>
+          </div>
+
+          <div class="project-card">
+            <div class="proj-title">Java Game Collection</div>
+            <div class="small muted">Java • OOP • Swing/Console</div>
+            <p class="muted">Small Java games (Tic-Tac-Toe, Pac-Man, Sudoku, Calculator) built to learn core Java, event handling, and OOP design.</p>
+            <div class="small">Repo: <strong>Private</strong></div>
+          </div>
+
+          <div class="project-card">
+            <div class="proj-title">J.P. Morgan SDE Simulation</div>
+            <div class="small muted">Java • IAM Role Simulation</div>
+            <p class="muted">Participated in an SDE job simulation run by JPMorgan. GitHub repo is private — can be made public on request.</p>
+          </div>
+
+          <div class="project-card">
+            <div class="proj-title">Live News App (Flutter / iOS in Swift)</div>
+            <div class="small muted">Flutter • Swift • Dart</div>
+            <p class="muted">Implemented a live news app in Flutter; re-implementing in Swift/iOS for native experience.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="experience" style="margin-top:24px">
+        <h2>Experience</h2>
+        <div class="card">
+          <div class="grid">
+            <div>
+              <div class="role">Backend Engineer — Grownited Pvt Ltd</div>
+              <div class="small">Jan 2025 — Apr 2025</div>
+              <div class="muted small">Built the Expense Tracker backend using Java, Spring Boot, Hibernate, and MySQL.</div>
+            </div>
+            <div>
+              <div class="role">Mobile Application Intern — Infolabz Pvt Ltd</div>
+              <div class="small">May 2024 — Jun 2024</div>
+              <div class="muted small">Worked on mobile features and UI for Android/iOS apps.</div>
+            </div>
+            <div>
+              <div class="role">Java Developer — TopperWorld Pvt Ltd</div>
+              <div class="small">Aug 2023 — Sep 2023</div>
+              <div class="muted small">Entry-level Java development tasks to familiarize with professional workflows.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills">
+        <h2>Skills</h2>
+        <div class="card">
+          <div class="skills">
+            <span class="pill">Java</span>
+            <span class="pill">Spring Boot</span>
+            <span class="pill">Hibernate</span>
+            <span class="pill">MySQL</span>
+            <span class="pill">Data Structures & Algorithms</span>
+            <span class="pill">OOP</span>
+            <span class="pill">Swift</span>
+            <span class="pill">Kotlin (basic)</span>
+            <span class="pill">Dart / Flutter (basic)</span>
+            <span class="pill">Firebase</span>
+            <span class="pill">HTML & CSS (fundamentals)</span>
+            <span class="pill">Git & GitHub</span>
+            <span class="pill">Cloud Computing (OCI)</span>
+            <span class="pill">Cloud Security Basics</span>
+            <span class="pill">Cybersecurity Fundamentals</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="achievements" style="margin-top:18px">
+        <h2>Hackathons & Achievements</h2>
+        <div class="card">
+          <ul class="muted" style="margin:6px 0 0 18px">
+            <li>Selected in Top 10 out of 300 participants in a recent hackathon (team-based).</li>
+            <li>Participated in Datathrone data-science hackathon — primary role: code cleaning & engineering.</li>
+            <li>Completed TCS Soft Skills certification.</li>
+            <li>Volunteered with AMC (Ahmedabad Municipal Corporation) for AIDS awareness program.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="contact" style="margin-top:18px">
+        <h2>Contact</h2>
+        <div class="card">
+          <p class="muted">Email: <a href="mailto:bhavantrivedi05@gmail.com" style="color:var(--accent);text-decoration:none">bhavantrivedi05@gmail.com</a></p>
+          <p class="muted">LinkedIn: <a href="https://www.linkedin.com/in/bhavan-trivedi-012714232/" target="_blank" style="color:var(--accent);text-decoration:none">linkedin.com/in/bhavan-trivedi-012714232</a></p>
+          <p class="muted">GitHub: <a href="https://github.com/BhavanTrivedi05" target="_blank" style="color:var(--accent);text-decoration:none">github.com/BhavanTrivedi05</a></p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <div class="container" style="max-width:var(--maxw);padding:18px 0">© 2025 Bhavan J. Trivedi — Built with care • Available for internships & SWE roles</div>
+    </footer>
+  </div>
+</body>
+</html>
