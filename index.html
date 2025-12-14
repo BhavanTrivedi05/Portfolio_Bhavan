@@ -1,298 +1,692 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bhavan Jignesh Trivedi — Portfolio</title>
-  <meta name="description" content="Bhavan Trivedi — MSCS at Northeastern University. Java Backend Developer, Cloud & Cybersecurity enthusiast." />
+  <meta name="description" content="Bhavan Trivedi — MSCS at Northeastern University. Java Backend Developer, Cloud & Cybersecurity enthusiast.">
   <style>
-    :root {
-      --bg: #0d1117;
-      --text: #e6edf3;
-      --text-light: #7d8590;
-      --border: #30363d;
-      --accent: #58a6ff;
-      --hover: #79c0ff;
-    }
-    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
     
+    :root {
+      --bg-primary: #000000;
+      --bg-secondary: #1a0033;
+      --text-primary: #00ff00;
+      --text-secondary: #00cc00;
+      --accent: #ff00ff;
+      --accent-yellow: #ffff00;
+      --neon-glow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+      --neon-glow-pink: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+    }
+    
+    @keyframes scanlines {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100%; }
+    }
+    
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.95; }
+    }
+    
+    @keyframes blink {
+      0%, 49%, 100% { opacity: 1; }
+      50%, 99% { opacity: 0; }
+    }
+    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      color: var(--text);
-      background: var(--bg);
+      font-family: 'Courier New', 'Courier', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
       line-height: 1.6;
-      font-size: 16px;
+      overflow-x: hidden;
+      position: relative;
+      text-shadow: var(--neon-glow);
+      animation: flicker 0.15s infinite;
     }
     
-    .container {
-      max-width: 900px;
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 255, 0, 0.03) 0px,
+        transparent 1px,
+        transparent 2px,
+        rgba(0, 255, 0, 0.03) 3px
+      );
+      pointer-events: none;
+      z-index: 9999;
+      animation: scanlines 8s linear infinite;
+    }
+    
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.8) 100%);
+      pointer-events: none;
+      z-index: 9998;
+    }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 1.5rem 0;
+      border-bottom: 2px solid var(--text-primary);
+      box-shadow: 0 0 20px var(--text-primary);
+    }
+    
+    nav .container {
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 60px 24px;
-    }
-    
-    header {
-      margin-bottom: 80px;
-    }
-    
-    h1 {
-      font-size: 32px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      letter-spacing: -0.5px;
-    }
-    
-    .subtitle {
-      font-size: 18px;
-      color: var(--text-light);
-      margin-bottom: 24px;
-      max-width: 640px;
-    }
-    
-    .links {
+      padding: 0 2rem;
       display: flex;
-      gap: 24px;
-      margin-top: 32px;
+      justify-content: space-between;
+      align-items: center;
     }
     
-    .links a {
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
       color: var(--accent);
       text-decoration: none;
-      font-size: 15px;
-      transition: color 0.2s;
+      letter-spacing: 3px;
+      text-shadow: var(--neon-glow-pink);
+      animation: blink 2s infinite;
     }
     
-    .links a:hover {
-      color: var(--hover);
-    }
-    
-    section {
-      margin-bottom: 64px;
-    }
-    
-    h2 {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 24px;
-      letter-spacing: -0.3px;
-    }
-    
-    .section-intro {
-      color: var(--text-light);
-      margin-bottom: 32px;
-      line-height: 1.7;
-    }
-    
-    .project-list, .experience-list {
+    .nav-links {
       display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-    
-    .project-item, .experience-item {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 24px;
-    }
-    
-    .project-item:last-child, .experience-item:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-    
-    .item-title {
-      font-size: 17px;
-      font-weight: 500;
-      margin-bottom: 6px;
-    }
-    
-    .item-meta {
-      font-size: 14px;
-      color: var(--text-light);
-      margin-bottom: 8px;
-    }
-    
-    .item-description {
-      color: var(--text-light);
-      font-size: 15px;
-      line-height: 1.6;
-    }
-    
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 12px;
-      font-size: 15px;
-      color: var(--text-light);
-    }
-    
-    .achievement-list {
+      gap: 2rem;
       list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
     }
     
-    .achievement-list li {
-      color: var(--text-light);
-      font-size: 15px;
-      padding-left: 20px;
+    .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.3s;
       position: relative;
+      letter-spacing: 2px;
+      text-shadow: var(--neon-glow);
     }
     
-    .achievement-list li:before {
-      content: "—";
+    .nav-links a::before {
+      content: '> ';
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .nav-links a:hover {
+      color: var(--accent-yellow);
+      text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00;
+    }
+    
+    .nav-links a:hover::before {
+      opacity: 1;
+    }
+    
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      position: relative;
+      background: 
+        linear-gradient(45deg, transparent 48%, var(--accent) 49%, var(--accent) 51%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, var(--accent) 49%, var(--accent) 51%, transparent 52%);
+      background-size: 40px 40px;
+      background-position: 0 0;
+      opacity: 0.1;
+      animation: grid-scroll 20s linear infinite;
+    }
+    
+    @keyframes grid-scroll {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 40px; }
+    }
+    
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 3rem;
+      border: 3px solid var(--text-primary);
+      box-shadow: 
+        0 0 20px var(--text-primary),
+        inset 0 0 20px rgba(0, 255, 0, 0.1);
+    }
+    
+    .hero-greeting {
+      color: var(--accent-yellow);
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00;
+    }
+    
+    .hero-greeting::before {
+      content: '>>> ';
+      animation: blink 1s infinite;
+    }
+    
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+      letter-spacing: 5px;
+      color: var(--text-primary);
+      text-shadow: var(--neon-glow);
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(1.5rem, 5vw, 3rem);
+      color: var(--accent);
+      margin-bottom: 2rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-shadow: var(--neon-glow-pink);
+    }
+    
+    .hero-description {
+      max-width: 600px;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      text-shadow: 0 0 5px #00cc00;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: var(--bg-primary);
+      color: var(--accent-yellow);
+      border: 3px solid var(--accent-yellow);
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 3px;
+      font-weight: 700;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      text-shadow: 0 0 10px #ffff00;
+      box-shadow: 0 0 20px var(--accent-yellow);
+    }
+    
+    .cta-button:hover {
+      background: var(--accent-yellow);
+      color: var(--bg-primary);
+      text-shadow: none;
+      transform: scale(1.1);
+      box-shadow: 0 0 30px var(--accent-yellow);
+    }
+    
+    /* Section Styles */
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .section-title {
+      font-size: 2.5rem;
+      color: var(--accent);
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      letter-spacing: 4px;
+      text-shadow: var(--neon-glow-pink);
+    }
+    
+    .section-title::before {
+      content: '[' attr(data-number) ']';
+      color: var(--accent-yellow);
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-shadow: 0 0 10px #ffff00;
+    }
+    
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 3px;
+      background: var(--text-primary);
+      max-width: 300px;
+      box-shadow: var(--neon-glow);
+    }
+    
+    /* About Section */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    
+    .about-text {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      line-height: 1.8;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      border: 2px solid var(--text-primary);
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+    }
+    
+    .about-text p {
+      margin-bottom: 1.5rem;
+    }
+    
+    .tech-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+      margin-top: 2rem;
+    }
+    
+    .tech-list li {
+      color: var(--accent-yellow);
+      font-size: 1rem;
+      list-style: none;
+      padding-left: 2rem;
+      position: relative;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px #ffff00;
+    }
+    
+    .tech-list li::before {
+      content: '▸';
+      color: var(--text-primary);
       position: absolute;
       left: 0;
+      font-size: 1.5rem;
+      text-shadow: var(--neon-glow);
     }
     
-    footer {
-      margin-top: 80px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
+    /* Projects Section */
+    .projects-grid {
+      display: grid;
+      gap: 3rem;
+    }
+    
+    .project-card {
+      background: rgba(0, 0, 0, 0.8);
+      border: 3px solid var(--text-primary);
+      padding: 2rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+    
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--accent-yellow), var(--accent), var(--text-primary));
+      box-shadow: 0 0 15px var(--accent);
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 0 40px var(--accent), 0 0 60px rgba(255, 0, 255, 0.5);
+      border-color: var(--accent);
+    }
+    
+    .project-title {
+      font-size: 1.8rem;
+      color: var(--accent-yellow);
+      margin-bottom: 0.5rem;
+      letter-spacing: 3px;
+      text-shadow: 0 0 15px #ffff00;
+    }
+    
+    .project-tech {
+      color: var(--accent);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+      text-shadow: var(--neon-glow-pink);
+    }
+    
+    .project-description {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+    
+    /* Experience Section */
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+    
+    .experience-item {
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.7);
+      border-left: 5px solid var(--text-primary);
+      border-right: 5px solid var(--accent);
+      position: relative;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+    }
+    
+    .experience-item::before {
+      content: '●';
+      position: absolute;
+      left: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      color: var(--accent-yellow);
+      text-shadow: 0 0 20px #ffff00;
+      animation: blink 2s infinite;
+    }
+    
+    .experience-title {
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+      text-shadow: var(--neon-glow);
+    }
+    
+    .experience-date {
+      color: var(--accent);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+      text-shadow: var(--neon-glow-pink);
+    }
+    
+    .experience-description {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+    
+    /* Contact Section */
+    .contact-content {
       text-align: center;
-      color: var(--text-light);
-      font-size: 14px;
+      max-width: 700px;
+      margin: 0 auto;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 3rem;
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 40px var(--accent);
     }
     
-    @media (max-width: 640px) {
-      .container {
-        padding: 40px 20px;
+    .contact-content p {
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    
+    .social-links a {
+      color: var(--accent-yellow);
+      font-size: 2.5rem;
+      transition: all 0.3s;
+      text-shadow: 0 0 15px #ffff00;
+    }
+    
+    .social-links a:hover {
+      color: var(--accent);
+      transform: translateY(-5px) scale(1.3);
+      text-shadow: var(--neon-glow-pink);
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-primary);
+      font-size: 1rem;
+      border-top: 3px solid var(--text-primary);
+      box-shadow: 0 0 20px var(--text-primary);
+      letter-spacing: 3px;
+      text-shadow: var(--neon-glow);
+    }
+    
+    footer::before {
+      content: '[ ';
+    }
+    
+    footer::after {
+      content: ' ]';
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
       }
       
-      h1 {
-        font-size: 28px;
+      .tech-list {
+        grid-template-columns: 1fr;
       }
       
-      .subtitle {
-        font-size: 16px;
+      section {
+        padding: 4rem 1.5rem;
       }
       
-      .links {
-        flex-direction: column;
-        gap: 16px;
-      }
-      
-      .skills-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      .hero-content {
+        padding: 2rem;
       }
     }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes glitch {
+      0%, 100% { transform: translate(0); }
+      33% { transform: translate(-2px, 2px); }
+      66% { transform: translate(2px, -2px); }
+    }
+    
+    .hero-content > * {
+      animation: fadeInUp 0.8s ease-out backwards;
+    }
+    
+    .hero-greeting { animation-delay: 0.1s; }
+    .hero-title { 
+      animation-delay: 0.2s;
+      animation: fadeInUp 0.8s ease-out 0.2s backwards, glitch 0.5s infinite;
+    }
+    .hero-subtitle { animation-delay: 0.3s; }
+    .hero-description { animation-delay: 0.4s; }
+    .cta-button { animation-delay: 0.5s; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Bhavan Jignesh Trivedi</h1>
-      <div class="subtitle">
-        Master of Science in Computer Science at Northeastern University. Building backend systems with Java and Spring Boot, with interests in cloud computing and cybersecurity.
-      </div>
-      <div class="links">
-        <a href="mailto:bhavantrivedi05@gmail.com">Email</a>
-        <a href="https://github.com/BhavanTrivedi05" target="_blank">GitHub</a>
-        <a href="https://www.linkedin.com/in/bhavan-trivedi-012714232/" target="_blank">LinkedIn</a>
-      </div>
-    </header>
-
-    <section>
-      <h2>About</h2>
-      <p class="section-intro">
-        I'm currently pursuing my master's degree in computer science at Northeastern University in Boston. My work focuses on backend development using Java and Spring Boot, building APIs and systems that are clean, maintainable, and production-ready. I'm also exploring cloud computing and security fundamentals as part of my broader technical interests.
-      </p>
-    </section>
-
-    <section>
-      <h2>Projects</h2>
-      <div class="project-list">
-        <div class="project-item">
-          <div class="item-title">Expense Tracker</div>
-          <div class="item-meta">Spring Boot, Hibernate, MySQL</div>
-          <div class="item-description">
-            Full-stack expense management application with backend built in Java. Handles data persistence, API design, and business logic. Developed as part of a team project with shared frontend responsibilities.
-          </div>
-        </div>
-
-        <div class="project-item">
-          <div class="item-title">Java Game Collection</div>
-          <div class="item-meta">Java, Swing</div>
-          <div class="item-description">
-            Collection of classic games including Tic-Tac-Toe, Pac-Man, and Sudoku. Built to strengthen understanding of object-oriented design patterns, event handling, and Java fundamentals.
-          </div>
-        </div>
-
-        <div class="project-item">
-          <div class="item-title">Live News Application</div>
-          <div class="item-meta">Flutter, Swift, iOS</div>
-          <div class="item-description">
-            Real-time news aggregation app initially built with Flutter, currently being reimplemented in native Swift for iOS to explore platform-specific development patterns.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Experience</h2>
-      <div class="experience-list">
-        <div class="experience-item">
-          <div class="item-title">Backend Engineer — Grownited Pvt Ltd</div>
-          <div class="item-meta">January 2025 – April 2025</div>
-          <div class="item-description">
-            Developed backend infrastructure for an expense tracking system using Java, Spring Boot, and Hibernate with MySQL database.
-          </div>
-        </div>
-
-        <div class="experience-item">
-          <div class="item-title">Mobile Application Intern — Infolabz Pvt Ltd</div>
-          <div class="item-meta">May 2024 – June 2024</div>
-          <div class="item-description">
-            Contributed to mobile application features and user interface development for Android and iOS platforms.
-          </div>
-        </div>
-
-        <div class="experience-item">
-          <div class="item-title">Java Developer — TopperWorld Pvt Ltd</div>
-          <div class="item-meta">August 2023 – September 2023</div>
-          <div class="item-description">
-            Entry-level development role focused on learning professional Java development workflows and practices.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Skills</h2>
-      <div class="skills-grid">
-        <div>Java</div>
-        <div>Spring Boot</div>
-        <div>Hibernate</div>
-        <div>MySQL</div>
-        <div>Data Structures</div>
-        <div>Algorithms</div>
-        <div>Swift</div>
-        <div>Kotlin</div>
-        <div>Flutter</div>
-        <div>Firebase</div>
-        <div>Git</div>
-        <div>Cloud Computing</div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Achievements</h2>
-      <ul class="achievement-list">
-        <li>Selected for top 10 out of 300 participants in team-based hackathon competition</li>
-        <li>Participated in Datathrone data science hackathon with focus on code optimization and engineering</li>
-        <li>Completed TCS Soft Skills certification program</li>
-        <li>Completed J.P. Morgan Software Engineering simulation</li>
-        <li>Volunteer work with Ahmedabad Municipal Corporation for AIDS awareness initiative</li>
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">[ BT ]</a>
+      <ul class="nav-links">
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#projects">PROJECTS</a></li>
+        <li><a href="#experience">EXPERIENCE</a></li>
+        <li><a href="#contact">CONTACT</a></li>
       </ul>
-    </section>
+    </div>
+  </nav>
 
-    <footer>
-      Available for software engineering internships and full-time opportunities
-    </footer>
-  </div>
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-greeting">SYSTEM INITIALIZED</p>
+      <h1 class="hero-title">BHAVAN TRIVEDI</h1>
+      <h2 class="hero-subtitle">BACKEND_ENGINEER.EXE</h2>
+      <p class="hero-description">
+        > Master's in Computer Science @ Northeastern University<br>
+        > Specializing in Java backend development with Spring Boot<br>
+        > Building scalable systems | Cloud computing | Cybersecurity
+      </p>
+      <a href="#projects" class="cta-button">START GAME</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2 class="section-title" data-number="01">PLAYER_INFO</h2>
+    <div class="about-content">
+      <div class="about-text">
+        <p>
+          >> LOADING PROFILE DATA...<br><br>
+          Currently pursuing master's degree in Computer Science at Northeastern University, Boston. Primary focus: backend development with robust APIs and system architecture using Java and Spring Boot.
+        </p>
+        <p>
+          >> SKILLS ACQUIRED: Full-stack application development with emphasis on clean code, maintainable architecture, and production-ready solutions. Recent achievements include comprehensive security systems and machine learning applications.
+        </p>
+        <p>>> TECH_STACK.LIST:</p>
+        <ul class="tech-list">
+          <li>JAVA & SPRING BOOT</li>
+          <li>HIBERNATE & JPA</li>
+          <li>MYSQL & POSTGRESQL</li>
+          <li>FIREBASE & CLOUD</li>
+          <li>SWIFT & iOS DEV</li>
+          <li>GIT & CI/CD</li>
+          <li>RESTful APIs</li>
+          <li>SECURITY & AUTH</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2 class="section-title" data-number="02">GAME_LEVELS</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3 class="project-title">CYBERGUARD_GATEWAY</h3>
+        <p class="project-tech">JAVA • SPRING BOOT • SECURITY • RATE LIMITING</p>
+        <p class="project-description">
+          >> LEVEL: EXPERT<br>
+          Web Application Firewall and API Gateway with enterprise security. Features: rate limiting, SQL injection detection, token validation. Status: PRODUCTION READY.
+        </p>
+      </div>
+
+      <div class="project-card">
+        <h3 class="project-title">UN_VOTING_PREDICTOR</h3>
+        <p class="project-tech">PYTHON • ML • RANDOM FOREST</p>
+        <p class="project-description">
+          >> LEVEL: ADVANCED<br>
+          Machine learning system predicting UN voting behavior using Random Forest algorithms. Achievement: HIGH ACCURACY through comprehensive data analysis and feature engineering.
+        </p>
+      </div>
+
+      <div class="project-card">
+        <h3 class="project-title">CARPOOLNU</h3>
+        <p class="project-tech">SWIFT • FIREBASE • CORE LOCATION • MVVM</p>
+        <p class="project-description">
+          >> LEVEL: ADVANCED<br>
+          iOS carpooling app for Northeastern students. Features: Firebase Auth, real-time location services, sophisticated MVVM architecture. Status: DEPLOYED.
+        </p>
+      </div>
+
+      <div class="project-card">
+        <h3 class="project-title">EXPENSE_TRACKER</h3>
+        <p class="project-tech">SPRING BOOT • HIBERNATE • MYSQL</p>
+        <p class="project-description">
+          >> LEVEL: INTERMEDIATE<br>
+          Full-stack expense management system. Backend in Java with data persistence, API design, and business logic. Architecture: CLEAN & MAINTAINABLE.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2 class="section-title" data-number="03">ACHIEVEMENT_LOG</h2>
+    <div class="experience-list">
+      <div class="experience-item">
+        <h3 class="experience-title">BACKEND ENGINEER — GROWNITED PVT LTD</h3>
+        <p class="experience-date">JAN 2025 – APR 2025</p>
+        <p class="experience-description">
+          >> MISSION COMPLETED<br>
+          Developed backend infrastructure for expense tracking system using Java, Spring Boot, and Hibernate with MySQL. Built scalable APIs and implemented efficient data persistence layers.
+        </p>
+      </div>
+
+      <div class="experience-item">
+        <h3 class="experience-title">MOBILE APP INTERN — INFOLABZ PVT LTD</h3>
+        <p class="experience-date">MAY 2024 – JUN 2024</p>
+        <p class="experience-description">
+          >> MISSION COMPLETED<br>
+          Contributed to mobile application features and UI development for Android and iOS platforms. Gained cross-platform development experience.
+        </p>
+      </div>
+
+      <div class="experience-item">
+        <h3 class="experience-title">JAVA DEVELOPER — TOPPERWORLD PVT LTD</h3>
+        <p class="experience-date">AUG 2023 – SEP 2023</p>
+        <p class="experience-description">
+          >> MISSION COMPLETED<br>
+          Entry-level role focused on professional Java development workflows. Built foundational understanding of enterprise Java applications.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 class="section-title" data-number="04">CONNECT_PROTOCOL</h2>
+    <div class="contact-content">
+      <p>
+        >> COMMUNICATION CHANNELS OPEN<br><br>
+        Seeking software engineering internships and full-time opportunities. Press START to initiate contact sequence.
+      </p>
+      <a href="mailto:bhavantrivedi05@gmail.com" class="cta-button">PRESS START</a>
+      <div class="social-links">
+        <a href="https://github.com/BhavanTrivedi05" target="_blank" aria-label="GitHub">⚡</a>
+        <a href="https://www.linkedin.com/in/bhavan-trivedi-012714232/" target="_blank" aria-label="LinkedIn">💼</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>GAME DESIGNED BY BHAVAN TRIVEDI © 2025</p>
+  </footer>
 </body>
 </html>
