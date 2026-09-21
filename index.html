@@ -2,664 +2,448 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bhavan Trivedi — Systems Engineer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bhavan Trivedi — Software Engineer</title>
+<meta name="description" content="Software engineer in Boston. Backend services, mobile apps, databases, and cloud. MS Computer Science at Northeastern, December 2027.">
 <style>
   :root{
-    --void:#0A0C0E;
-    --panel:#101418;
-    --panel-2:#0D1114;
-    --line:#1E252B;
-    --line-soft:#151A1F;
-    --ink:#C7D0D6;
-    --ink-bright:#E7EDF1;
-    --dim:#6B7780;
-    --dim-2:#48525A;
-    --phosphor:#4BD6A0;
-    --phosphor-dim:#2E7D5F;
-    --alert:#E5484D;
-    --mono:'IBM Plex Mono','SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace;
-    --unit:8px;
+    /* deep space blue */
+    --space:#060A14;
+    --deep:#0A1120;
+    --panel:#0E1728;
+    --rule:#1A2438;
+    --rule-soft:#131C2C;
+    --ink:#E9EEF8;
+    --ink-soft:#A6B2C8;
+    --ink-faint:#6C7A93;
+    --accent:#7FA8FF;
+    --accent-soft:#3F5C99;
+    --live:#4ED08A;
+
+    --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --ease:cubic-bezier(.16,1,.3,1);
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   body{
-    background:var(--void);
+    background:var(--space);
     color:var(--ink);
-    font-family:var(--mono);
-    font-weight:400;
-    font-size:15px;
-    line-height:1.7;
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.6;
+    letter-spacing:-0.011em;
     -webkit-font-smoothing:antialiased;
-    letter-spacing:0.01em;
-    /* engineering-paper grid */
-    background-image:
-      linear-gradient(var(--line-soft) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-    background-size:32px 32px;
-    background-position:-1px -1px;
-    min-height:100vh;
+    text-rendering:optimizeLegibility;
     overflow-x:hidden;
   }
-  /* subtle vignette so grid fades at edges */
+  /* one soft deep-field glow behind the opening, nothing else decorates */
   body::before{
-    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-    background:radial-gradient(ellipse 120% 80% at 50% 0%, transparent 40%, var(--void) 100%);
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(900px 520px at 22% -8%, rgba(72,110,190,.20), transparent 62%),
+      radial-gradient(700px 400px at 88% 2%, rgba(48,80,150,.13), transparent 60%);
   }
-
   a{color:inherit;text-decoration:none}
-  ::selection{background:var(--phosphor-dim);color:var(--void)}
-  :focus-visible{outline:2px solid var(--phosphor);outline-offset:3px}
+  ::selection{background:var(--accent);color:var(--space)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:3px}
 
-  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,56px);position:relative;z-index:1}
+  .col{width:100%;max-width:760px;margin:0 auto;padding:0 26px;position:relative;z-index:1}
 
-  /* ---------- status bar ---------- */
-  .statusbar{
-    border-bottom:1px solid var(--line);
-    background:linear-gradient(var(--panel-2),transparent);
-    font-size:11.5px;color:var(--dim);
-    letter-spacing:0.04em;
-    position:sticky;top:0;z-index:40;
-    backdrop-filter:blur(6px);
-    background-color:rgba(10,12,14,0.7);
+  /* ================= header ================= */
+  .bar{
+    position:fixed;top:0;left:0;right:0;z-index:40;
+    background:rgba(6,10,20,.72);
+    backdrop-filter:saturate(170%) blur(18px);
+    -webkit-backdrop-filter:saturate(170%) blur(18px);
+    border-bottom:1px solid transparent;
+    opacity:0;transform:translateY(-10px);pointer-events:none;
+    transition:opacity .55s var(--ease),transform .55s var(--ease),border-color .55s var(--ease);
   }
-  .statusbar .wrap{display:flex;align-items:center;justify-content:space-between;height:34px;gap:16px}
-  .statusbar .host{color:var(--ink)}
-  .statusbar .grp{display:flex;gap:22px;align-items:center;white-space:nowrap;overflow:hidden}
-  .statusbar .k{color:var(--dim-2)}
-  .dot{width:6px;height:6px;border-radius:50%;background:var(--phosphor);display:inline-block;
-       box-shadow:0 0 8px var(--phosphor);margin-right:7px;vertical-align:middle;animation:pulse 2.4s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
-  .avail{color:var(--phosphor)}
+  .bar.on{opacity:1;transform:none;pointer-events:auto;border-bottom-color:var(--rule)}
+  .bar .col{display:flex;align-items:center;justify-content:space-between;height:54px;gap:18px}
+  .bar .me{font-size:15px;font-weight:600;letter-spacing:-0.015em}
+  .bar nav{display:flex;gap:20px;font-size:14px;color:var(--ink-soft)}
+  .bar nav a{transition:color .25s var(--ease)}
+  .bar nav a:hover{color:var(--ink)}
+  @media(max-width:640px){.bar nav{gap:14px;font-size:13px}}
+  @media(max-width:480px){.bar nav a:nth-child(4),.bar nav a:nth-child(3){display:none}}
 
-  /* ---------- nav ---------- */
-  header.nav{border-bottom:1px solid var(--line);position:sticky;top:34px;z-index:30;
-             background-color:rgba(10,12,14,0.82);backdrop-filter:blur(8px)}
-  header.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:20px}
-  .brand{font-weight:600;font-size:15px;color:var(--ink-bright);letter-spacing:0.02em}
-  .brand .tilde{color:var(--phosphor)}
-  nav ul{list-style:none;display:flex;gap:6px;flex-wrap:wrap}
-  nav a{
-    font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);
-    padding:6px 12px;border:1px solid transparent;border-radius:2px;transition:color .18s,border-color .18s;
-    position:relative;
+  /* ================= hero ================= */
+  .hero{padding:23vh 0 14vh}
+  .hero h1{
+    font-size:clamp(2.5rem,7.6vw,4.3rem);
+    font-weight:650;line-height:1.03;letter-spacing:-0.038em;
+    margin-bottom:24px;max-width:16ch;
   }
-  nav a:hover{color:var(--ink)}
-  nav a[aria-current="page"]{color:var(--phosphor);border-color:var(--line)}
-  nav a[aria-current="page"]::before{content:"› "}
-
-  /* ---------- page system ---------- */
-  main{position:relative;z-index:1}
-  .page{display:none;padding:clamp(40px,7vw,86px) 0 100px}
-  .page.active{display:block;animation:fade .4s ease}
-  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
-  /* eyebrow / callouts */
-  .eyebrow{font-size:12px;color:var(--phosphor);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:20px}
-  .eyebrow::before{content:"// "}
-  .callout{font-size:11.5px;color:var(--dim);letter-spacing:0.16em;text-transform:uppercase;
-           display:flex;align-items:center;gap:12px;margin-bottom:26px}
-  .callout::before{content:"";height:1px;width:34px;background:var(--dim-2);display:inline-block}
-  .callout .idx{color:var(--dim-2)}
-
-  /* ---------- home hero ---------- */
-  .hero{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
-  h1.display{
-    font-size:clamp(2.6rem,7vw,5.2rem);font-weight:600;line-height:0.98;letter-spacing:-0.01em;
-    color:var(--ink-bright);margin-bottom:26px;
+  .hero .lede{font-size:19.5px;color:var(--ink-soft);max-width:52ch;line-height:1.62;letter-spacing:-0.012em}
+  .hero .lede b{color:var(--ink);font-weight:560}
+  .status{
+    margin-top:34px;display:inline-flex;align-items:center;gap:10px;
+    font-size:15px;color:var(--ink-soft);
+    border:1px solid var(--rule);border-radius:100px;padding:8px 16px 8px 13px;
+    background:rgba(14,23,40,.6);
   }
-  h1.display .up{color:var(--phosphor)}
-  .cursor{display:inline-block;width:0.6ch;height:1em;background:var(--phosphor);
-          transform:translateY(0.12em);margin-left:4px;animation:blink 1.1s steps(1) infinite}
-  @keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
-  .lede{font-size:16px;color:var(--dim);max-width:46ch;line-height:1.75;margin-bottom:34px;font-weight:300}
-  .lede b{color:var(--ink);font-weight:500}
-  .actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-  .btn{
-    font-family:var(--mono);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;
-    padding:13px 22px;border:1px solid var(--line);border-radius:2px;color:var(--ink);
-    background:var(--panel);cursor:pointer;transition:border-color .18s,color .18s,background .18s;
+  .status i{width:7px;height:7px;border-radius:50%;background:var(--live);flex:none;
+            box-shadow:0 0 0 4px rgba(78,208,138,.14)}
+  .facts{display:flex;flex-wrap:wrap;gap:30px;margin-top:46px;padding-top:26px;border-top:1px solid var(--rule-soft)}
+  .facts div{min-width:120px}
+  .facts .v{font-size:16px;color:var(--ink);font-weight:520}
+  .facts .l{font-size:13px;color:var(--ink-faint);margin-top:2px}
+
+  /* one orchestrated entrance */
+  .rise{opacity:0;transform:translateY(16px)}
+  .loaded .rise{opacity:1;transform:none;transition:opacity 1s var(--ease),transform 1s var(--ease)}
+  .loaded .d1{transition-delay:.04s}
+  .loaded .d2{transition-delay:.14s}
+  .loaded .d3{transition-delay:.24s}
+  .loaded .d4{transition-delay:.34s}
+
+  /* ================= sections ================= */
+  section{padding:62px 0;position:relative;z-index:1}
+  .head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:12px}
+  .head h2{font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-0.005em}
+  .head span{font-size:13.5px;color:var(--ink-faint)}
+  .sect-note{font-size:15.5px;color:var(--ink-soft);max-width:60ch;margin-bottom:34px}
+
+  /* gentle, once-only reveal as sections come up */
+  .veil{opacity:0;transform:translateY(10px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .veil.seen{opacity:1;transform:none}
+
+  /* ================= work ================= */
+  .work{border-top:1px solid var(--rule)}
+  .proj{padding:32px 0;border-bottom:1px solid var(--rule)}
+  .proj-top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .proj h3{font-size:22px;font-weight:620;letter-spacing:-0.024em}
+  .proj .term{font-size:13.5px;color:var(--ink-faint);white-space:nowrap}
+  .proj .kind{font-size:15px;color:var(--accent);margin:4px 0 16px}
+  .proj p{color:var(--ink-soft);font-size:16.5px;max-width:64ch;margin-bottom:15px}
+
+  .marks{display:flex;flex-wrap:wrap;gap:28px;margin:20px 0 18px;padding:18px 0;
+         border-top:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft)}
+  .marks div{min-width:88px}
+  .marks .n{font-size:21px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+  .marks .n em{font-style:normal;color:var(--accent)}
+  .marks .c{font-size:12.5px;color:var(--ink-faint);margin-top:1px}
+
+  .stack{font-family:var(--mono);font-size:12.5px;line-height:1.75;color:var(--ink-faint);letter-spacing:0}
+  .proj .go{display:inline-block;margin-top:15px;font-size:15px;color:var(--accent);
+            border-bottom:1px solid transparent;transition:border-color .3s var(--ease)}
+  .proj .go:hover{border-bottom-color:currentColor}
+  .proj .closed{margin-top:15px;font-size:14px;color:var(--ink-faint)}
+
+  /* ================= experience ================= */
+  .job{display:grid;grid-template-columns:150px 1fr;gap:22px;padding:26px 0;border-top:1px solid var(--rule)}
+  .job:last-child{border-bottom:1px solid var(--rule)}
+  .job .when{font-size:14px;color:var(--ink-faint);padding-top:3px}
+  .job h3{font-size:18px;font-weight:600;letter-spacing:-0.018em}
+  .job .org{font-size:15px;color:var(--accent);margin-bottom:12px}
+  .job ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .job li{font-size:15.5px;color:var(--ink-soft);max-width:58ch;padding-left:16px;position:relative}
+  .job li::before{content:"";position:absolute;left:0;top:11px;width:5px;height:1px;background:var(--accent-soft)}
+  @media(max-width:640px){
+    .job{grid-template-columns:1fr;gap:8px}
+    .job .when{order:-1}
   }
-  .btn:hover{border-color:var(--phosphor-dim);color:var(--phosphor)}
-  .btn.solid{background:var(--phosphor);color:var(--void);border-color:var(--phosphor);font-weight:600}
-  .btn.solid:hover{background:var(--ink-bright);border-color:var(--ink-bright);color:var(--void)}
-  .btn .arw{color:var(--dim);margin-left:6px}
-  .btn:hover .arw{color:inherit}
 
-  /* ---------- instrument panel (signature) ---------- */
-  .panel{
-    border:1px solid var(--line);border-radius:4px;background:
-      linear-gradient(var(--panel),var(--panel-2));
-    overflow:hidden;box-shadow:0 30px 80px -40px rgba(0,0,0,0.9);
+  /* ================= toolchain ================= */
+  .kit{border-top:1px solid var(--rule)}
+  .kit .line{display:grid;grid-template-columns:150px 1fr;gap:22px;padding:15px 0;border-bottom:1px solid var(--rule-soft)}
+  .kit .k{font-size:14px;color:var(--ink-faint)}
+  .kit .v{font-size:15.5px;color:var(--ink-soft)}
+  .kit .v b{color:var(--ink);font-weight:550}
+  @media(max-width:640px){
+    .kit .line{grid-template-columns:1fr;gap:3px;padding:13px 0}
   }
-  .panel-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);
-             font-size:11px;color:var(--dim);letter-spacing:0.08em}
-  .panel-bar .leds{display:flex;gap:6px;margin-right:4px}
-  .panel-bar .led{width:8px;height:8px;border-radius:50%;background:var(--dim-2)}
-  .panel-bar .led.g{background:var(--phosphor-dim)}
-  .panel-bar .title{color:var(--ink)}
-  .panel-bar .right{margin-left:auto;color:var(--dim-2)}
-  .schematic{display:block;width:100%;height:300px}
-  .panel-foot{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
-  .stat{padding:12px 14px;border-right:1px solid var(--line)}
-  .stat:last-child{border-right:none}
-  .stat .lab{font-size:10px;color:var(--dim-2);letter-spacing:0.12em;text-transform:uppercase}
-  .stat .val{font-size:18px;color:var(--ink-bright);font-weight:500;margin-top:3px}
-  .stat .val small{font-size:11px;color:var(--dim);font-weight:400}
-  .stat .val.ok{color:var(--phosphor)}
 
-  /* ---------- generic section heading ---------- */
-  .page h2{font-size:clamp(1.6rem,3.4vw,2.4rem);color:var(--ink-bright);font-weight:600;
-           letter-spacing:-0.01em;margin-bottom:16px;line-height:1.1}
-  .page .intro{color:var(--dim);max-width:60ch;font-weight:300;margin-bottom:48px;font-size:15.5px}
-
-  /* ---------- systems (projects) ---------- */
-  .sys{border-top:1px solid var(--line)}
-  .sys .item{padding:34px 0;border-bottom:1px solid var(--line);display:grid;
-             grid-template-columns:120px 1fr;gap:28px}
-  .sys .part{font-size:12px;color:var(--dim-2);letter-spacing:0.1em}
-  .sys .part .no{color:var(--phosphor);display:block;font-size:22px;font-weight:600;margin-bottom:6px}
-  .sys h3{font-size:21px;color:var(--ink-bright);font-weight:600;margin-bottom:6px}
-  .sys .role{font-size:12px;color:var(--dim);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px}
-  .sys p{color:var(--dim);max-width:60ch;font-weight:300;margin-bottom:18px}
-  .sys .specs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
-  .sys .spec{font-size:11.5px;color:var(--ink);border:1px solid var(--line);padding:4px 10px;border-radius:2px;
-             background:var(--panel-2);letter-spacing:0.04em}
-  .sys .spec .k{color:var(--dim-2)}
-  .sys .links{display:flex;gap:18px;font-size:12.5px}
-  .sys .links a{color:var(--phosphor);letter-spacing:0.06em}
-  .sys .links a:hover{color:var(--ink-bright)}
-
-  /* ---------- about ---------- */
-  .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(30px,5vw,70px)}
-  .prose p{color:var(--dim);font-weight:300;margin-bottom:20px;max-width:58ch}
-  .prose p b{color:var(--ink);font-weight:500}
-  .toolchain{border:1px solid var(--line);border-radius:4px;background:var(--panel-2);height:fit-content}
-  .toolchain .th{padding:12px 16px;border-bottom:1px solid var(--line);font-size:11px;color:var(--dim-2);
-                 letter-spacing:0.14em;text-transform:uppercase}
-  .toolrow{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:12px 16px;border-bottom:1px solid var(--line-soft);
-           font-size:13px}
-  .toolrow:last-child{border-bottom:none}
-  .toolrow .k{color:var(--dim);letter-spacing:0.06em;font-size:11px;text-transform:uppercase;padding-top:2px}
-  .toolrow .v{color:var(--ink)}
-
-  /* ---------- log (experience) ---------- */
-  .log{border-left:1px solid var(--line);margin-left:8px}
-  .log .entry{padding:0 0 40px 34px;position:relative}
-  .log .entry::before{content:"";position:absolute;left:-4.5px;top:6px;width:8px;height:8px;border-radius:50%;
-                      background:var(--void);border:1px solid var(--phosphor-dim)}
-  .log .entry.now::before{background:var(--phosphor);box-shadow:0 0 8px var(--phosphor);border-color:var(--phosphor)}
-  .log .when{font-size:11px;color:var(--dim-2);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px}
-  .log h3{font-size:17px;color:var(--ink-bright);font-weight:600;margin-bottom:2px}
-  .log .org{font-size:13px;color:var(--phosphor);margin-bottom:12px}
-  .log p{color:var(--dim);font-weight:300;max-width:60ch;font-size:14px}
-
-  /* ---------- contact ---------- */
-  .contact-wrap{max-width:640px}
-  .prompt{font-size:14px;color:var(--dim);margin-bottom:30px}
-  .prompt::before{content:"$ ";color:var(--phosphor)}
-  .clinks{border-top:1px solid var(--line)}
-  .clink{display:flex;align-items:baseline;justify-content:space-between;gap:20px;
-         padding:20px 0;border-bottom:1px solid var(--line);transition:padding-left .2s}
-  .clink:hover{padding-left:10px}
-  .clink .k{font-size:11px;color:var(--dim-2);letter-spacing:0.14em;text-transform:uppercase}
-  .clink .v{font-size:16px;color:var(--ink-bright)}
-  .clink:hover .v{color:var(--phosphor)}
-  .clink .arw{color:var(--dim)}
-
-  /* ---------- footer ---------- */
-  footer{border-top:1px solid var(--line);padding:22px 0;margin-top:20px;position:relative;z-index:1}
-  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-               font-size:11px;color:var(--dim-2);letter-spacing:0.06em}
-  footer .ok{color:var(--phosphor-dim)}
-
-  /* ---------- responsive ---------- */
-  @media(max-width:860px){
-    .hero{grid-template-columns:1fr}
-    .about-grid{grid-template-columns:1fr}
-    .panel{order:2}
-    .statusbar .grp.mid{display:none}
+  /* ================= education + certs ================= */
+  .edu{display:grid;grid-template-columns:150px 1fr;gap:22px;padding:24px 0;border-top:1px solid var(--rule)}
+  .edu:last-of-type{border-bottom:1px solid var(--rule)}
+  .edu .when{font-size:14px;color:var(--ink-faint);padding-top:3px}
+  .edu h3{font-size:18px;font-weight:600;letter-spacing:-0.018em}
+  .edu .deg{font-size:15px;color:var(--accent);margin-bottom:8px}
+  .edu p{font-size:15.5px;color:var(--ink-soft);max-width:58ch}
+  .edu .courses{font-size:14.5px;color:var(--ink-faint);margin-top:8px;max-width:58ch}
+  @media(max-width:640px){
+    .edu{grid-template-columns:1fr;gap:6px}
+    .edu .when{order:-1}
   }
-  @media(max-width:560px){
-    .sys .item{grid-template-columns:1fr;gap:12px}
-    .panel-foot{grid-template-columns:1fr}
-    .stat{border-right:none;border-bottom:1px solid var(--line)}
-    header.nav{position:static}
-    .statusbar{position:static}
-    nav ul{gap:2px}
-    nav a{padding:6px 8px;font-size:11px;letter-spacing:0.06em}
-  }
-  @media(prefers-reduced-motion:reduce){
-    .cursor,.dot{animation:none}
-    .page.active{animation:none}
+  .certs{margin-top:30px}
+  .certs .c{display:flex;justify-content:space-between;gap:18px;padding:13px 0;border-bottom:1px solid var(--rule-soft);
+            font-size:15.5px;color:var(--ink-soft)}
+  .certs .c span{color:var(--ink-faint);font-size:14px;white-space:nowrap}
+
+  /* ================= contact ================= */
+  .reach{padding-bottom:26px}
+  .reach .lines{border-top:1px solid var(--rule);margin-top:26px}
+  .reach a{display:flex;align-items:baseline;justify-content:space-between;gap:18px;
+           padding:18px 0;border-bottom:1px solid var(--rule);transition:padding-left .3s var(--ease)}
+  .reach a:hover{padding-left:9px}
+  .reach .k{font-size:14px;color:var(--ink-faint);flex:none}
+  .reach .v{font-size:16.5px;color:var(--ink);text-align:right;word-break:break-all;transition:color .25s var(--ease)}
+  .reach a:hover .v{color:var(--accent)}
+
+  footer{padding:34px 0 62px;font-size:13.5px;color:var(--ink-faint);position:relative;z-index:1}
+
+  @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
+    .rise,.veil{opacity:1;transform:none}
+    .loaded .rise,.veil,.bar,.reach a,.proj .go,.reach .v{transition:none}
   }
 </style>
 </head>
 <body>
 
-<!-- STATUS BAR -->
-<div class="statusbar">
-  <div class="wrap">
-    <span class="host">bhavan@systems <span class="k">~</span></span>
-    <span class="grp mid">
-      <span><span class="k">node</span> ok</span>
-      <span><span class="k">region</span> us-east</span>
-      <span><span class="k">clock</span> <span id="clock">--:--:--</span></span>
-    </span>
-    <span class="grp"><span class="avail"><span class="dot"></span>OPEN · FALL 2026 CO-OP</span></span>
+<div class="bar" id="bar">
+  <div class="col">
+    <a class="me" href="#top">Bhavan Trivedi</a>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#exp">Experience</a>
+      <a href="#kit">Toolchain</a>
+      <a href="#edu">Education</a>
+      <a href="#reach">Contact</a>
+    </nav>
   </div>
 </div>
 
-<!-- NAV -->
-<header class="nav">
-  <div class="wrap">
-    <a class="brand" href="#index">Bhavan Trivedi <span class="tilde">~/</span></a>
-    <nav>
-      <ul>
-        <li><a href="#index" data-nav="index">Index</a></li>
-        <li><a href="#systems" data-nav="systems">Systems</a></li>
-        <li><a href="#about" data-nav="about">About</a></li>
-        <li><a href="#log" data-nav="log">Log</a></li>
-        <li><a href="#contact" data-nav="contact">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+<main id="top">
 
-<main>
-  <!-- ============ INDEX ============ -->
-  <section class="page" data-page="index">
-    <div class="wrap">
-      <div class="hero">
-        <div>
-          <p class="eyebrow">backend · systems engineer</p>
-          <h1 class="display">Building systems that <span class="up">stay up</span>.<span class="cursor"></span></h1>
-          <p class="lede">MSCS at Northeastern. I work in <b>Java</b>, <b>Spring Boot</b>, and <b>PostgreSQL</b> — and I care about the query plan behind every endpoint.</p>
-          <div class="actions">
-            <a class="btn solid" href="#systems">View systems</a>
-            <a class="btn" href="https://github.com/BhavanTrivedi05" target="_blank" rel="noopener">GitHub<span class="arw">↗</span></a>
-          </div>
-        </div>
-
-        <!-- SIGNATURE: live request pipeline -->
-        <div class="panel">
-          <div class="panel-bar">
-            <span class="leds"><span class="led g"></span><span class="led"></span><span class="led"></span></span>
-            <span class="title">gateway.monitor</span>
-            <span class="right">live · p=0.5</span>
-          </div>
-          <canvas class="schematic" id="pipe" aria-label="Live diagram: requests flowing from client through a WAF gateway and service to Postgres; some requests are blocked by the firewall."></canvas>
-          <div class="panel-foot">
-            <div class="stat"><div class="lab">Throughput</div><div class="val ok" id="s-rps">0 <small>req/s</small></div></div>
-            <div class="stat"><div class="lab">Block rate</div><div class="val" id="s-block">0.0<small>%</small></div></div>
-            <div class="stat"><div class="lab">p99 latency</div><div class="val" id="s-p99">— <small>within limits</small></div></div>
-          </div>
-        </div>
+  <header class="hero">
+    <div class="col">
+      <h1 class="rise d1">Software engineer.</h1>
+      <p class="lede rise d2">I've shipped <b>backend services</b>, an <b>iOS app</b>, a <b>desktop tool on a relational schema</b> I designed, and I taught <b>Android</b> to sixty students. Backend is where I'm deepest — it isn't the whole of what I do.</p>
+      <div class="rise d3"><span class="status"><i></i>Open to a Spring 2027 software engineering co-op</span></div>
+      <div class="facts rise d4">
+        <div><div class="v">Boston, Massachusetts</div><div class="l">Based</div></div>
+        <div><div class="v">MS Computer Science</div><div class="l">Northeastern, Dec 2027</div></div>
+        <div><div class="v">Java, Kotlin, Swift, Python, C++</div><div class="l">Languages I've shipped in</div></div>
       </div>
     </div>
-  </section>
+  </header>
 
-  <!-- ============ SYSTEMS ============ -->
-  <section class="page" data-page="systems">
-    <div class="wrap">
-      <p class="callout"><span class="idx">02</span> · systems registry</p>
-      <h2>Systems</h2>
-      <p class="intro">Things I've designed, built, and kept running. Each one is a real spec, not a screenshot.</p>
+  <section id="work">
+    <div class="col">
+      <div class="head veil"><h2>Work</h2><span>five projects, what each one actually is</span></div>
+      <p class="sect-note veil">Two are running now, one is coursework in progress, two are finished. Where a repo is private I've said so rather than link you somewhere closed.</p>
 
-      <div class="sys">
-        <div class="item">
-          <div class="part"><span class="no">01</span>SYS·GATEWAY</div>
-          <div>
-            <h3>CyberGuard Gateway</h3>
-            <div class="role">API gateway / web application firewall · Java · Spring</div>
-            <p>A servlet-filter WAF that inspects every request before it reaches a service: SQL-injection and XSS scanning, sliding-window rate limiting, JWT auth, IP filtering, and security-event logging. The filter chain is ordered so the body can be re-read by later stages — the gotcha most people trip on.</p>
-            <div class="specs">
-              <span class="spec"><span class="k">filters</span> 7 ordered</span>
-              <span class="spec"><span class="k">auth</span> JWT + BCrypt</span>
-              <span class="spec"><span class="k">limit</span> sliding-window</span>
-              <span class="spec"><span class="k">block</span> 403 + audit log</span>
-            </div>
-            <div class="links"><a href="https://github.com/BhavanTrivedi05/CyberGuard-Gateway" target="_blank" rel="noopener">source ↗</a></div>
+      <div class="work">
+
+        <article class="proj veil">
+          <div class="proj-top">
+            <h3>Cosmos</h3>
+            <div class="term">Aug 2026 — now</div>
           </div>
-        </div>
-
-        <div class="item">
-          <div class="part"><span class="no">02</span>SYS·FINANCE</div>
-          <div>
-            <h3>SpendSmart</h3>
-            <div class="role">Personal-finance REST API + community layer · Spring Boot · PostgreSQL</div>
-            <p>A finance backend with a Reddit-style community layer on top — anonymized budget sharing, Q&amp;A, and comparisons modeled as one <code>Post</code> type rather than four separate features. Built brick by brick: merge, clean, one worked REST slice, deploy.</p>
-            <div class="specs">
-              <span class="spec"><span class="k">api</span> REST</span>
-              <span class="spec"><span class="k">db</span> PostgreSQL</span>
-              <span class="spec"><span class="k">model</span> Post + Comment + Topic</span>
-              <span class="spec"><span class="k">deploy</span> Render + Neon</span>
-            </div>
-            <div class="links"><a href="https://github.com/BhavanTrivedi05" target="_blank" rel="noopener">source ↗</a></div>
+          <div class="kind">Motorsport news and community platform</div>
+          <p>A news reader for motorsport across every series, with reaction-based discussion on stories. I designed the schema, wrote the service, and deployed it to a free-tier ARM machine where it runs under systemd behind Caddy. Live commenting, car and tech explainers, and a wider platform are what I'm building toward.</p>
+          <p>It grew out of an older codebase of mine, which I audited before building anything on top of it. Eight security defects: a credential committed to the repo, a path to taking over an admin account, passwords stored in plaintext, and a rate limiter that never limited anything. I fixed them one at a time with an AI coding agent driving, checking every change against the test suite.</p>
+          <p>I also measured what running in a container would cost me in memory against the RAM the free tier gives me, and ran the service under systemd instead of defaulting to Docker.</p>
+          <div class="marks">
+            <div><div class="n"><em>8</em></div><div class="c">defects fixed</div></div>
+            <div><div class="n">46 → <em>52</em></div><div class="c">passing tests</div></div>
+            <div><div class="n"><em>9</em></div><div class="c">commits</div></div>
+            <div><div class="n"><em>1</em> box</div><div class="c">ARM64, free tier</div></div>
           </div>
-        </div>
+          <div class="stack">Java 21, Spring Boot 3.5, Hibernate, Thymeleaf, PostgreSQL 17, Flyway, Oracle Cloud ARM64, systemd, Caddy</div>
+          <div class="closed">Private while I get it presentable. Happy to walk through the code.</div>
+        </article>
 
-        <div class="item">
-          <div class="part"><span class="no">03</span>SYS·DESKTOP</div>
-          <div>
+        <article class="proj veil">
+          <div class="proj-top">
+            <h3>Cloud security platform</h3>
+            <div class="term">Fall 2026</div>
+          </div>
+          <div class="kind">Graduate coursework, three-person team, in progress</div>
+          <p>A security platform on AWS built around a static analysis scanner and a set of API penetration testing tools. Our angle is a protective layer that sits in front of an application without the application having to change — the principle I took from an earlier firewall project of mine, rebuilt rather than reused.</p>
+          <div class="stack">AWS, Node.js, Express</div>
+        </article>
+
+        <article class="proj veil">
+          <div class="proj-top">
             <h3>Student Survival Kit</h3>
-            <div class="role">Desktop app for international students · Java Swing · MySQL</div>
-            <p>CS5200 final project: a desktop toolkit that pulls the scattered logistics of student life into one place, backed by a normalized MySQL schema.</p>
-            <div class="specs">
-              <span class="spec"><span class="k">ui</span> Java Swing</span>
-              <span class="spec"><span class="k">db</span> MySQL</span>
-              <span class="spec"><span class="k">course</span> CS5200</span>
-            </div>
-            <div class="links"><a href="https://github.com/BhavanTrivedi05/studentSurvivalKit" target="_blank" rel="noopener">source ↗</a></div>
+            <div class="term">Spring 2026</div>
           </div>
+          <div class="kind">Desktop app for international students, database coursework</div>
+          <p>Visa documents, academic deadlines, job applications, expenses, housing leases, courses, contacts, and health records in one place — the logistics that otherwise live in eight different apps. It ships with a Swing interface and a command-line one over the same code.</p>
+          <p>The work worth talking about is underneath. Ten normalized tables with foreign keys cascading on delete and update, three stored procedures for expiring documents, upcoming deadlines, and monthly expense totals, a dashboard view, and a trigger that marks a deadline missed the moment you enter one that's already past. Every query goes through a prepared statement, and the whole schema installs from one script you can run twice.</p>
+          <div class="marks">
+            <div><div class="n"><em>10</em></div><div class="c">tables</div></div>
+            <div><div class="n"><em>3</em></div><div class="c">stored procedures</div></div>
+            <div><div class="n"><em>1</em></div><div class="c">view and trigger each</div></div>
+            <div><div class="n"><em>2</em></div><div class="c">interfaces, one codebase</div></div>
+          </div>
+          <div class="stack">Java 17, Swing, MySQL 8, JDBC, MVC across 10 models and 11 controllers</div>
+          <a class="go" href="https://github.com/BhavanTrivedi05/studentSurvivalKit" target="_blank" rel="noopener">Read the code on GitHub</a>
+        </article>
+
+        <article class="proj veil">
+          <div class="proj-top">
+            <h3>CarpoolNU</h3>
+            <div class="term">Sept — Dec 2025</div>
+          </div>
+          <div class="kind">iOS app for campus rides, team project</div>
+          <p>An iOS app for coordinating rides between students. I led the team from scope through delivery and wrote the matching logic that assigns riders to drivers under time and capacity constraints, plus Firebase authentication with email verification and session handling, and pickup and dropoff coordination through Core Location and MapKit.</p>
+          <p>It was a semester project and it stayed a prototype. I'm including it because it's the clearest evidence I pick up an unfamiliar platform quickly: I had not written Swift before the course started.</p>
+          <div class="stack">Swift, Xcode, Firebase Authentication, Core Location, MapKit</div>
+        </article>
+
+        <article class="proj veil">
+          <div class="proj-top">
+            <h3>Expense Tracker</h3>
+            <div class="term">May 2025 — now</div>
+          </div>
+          <div class="kind">Full-stack expense management</div>
+          <p>Expenses, accounts, categories and subcategories, and vendors, with date and category filtered reporting and a dashboard summary. Passwords hashed with BCrypt, password recovery through a one-time code sent by email, admin and user roles kept apart, and every account reading only its own rows.</p>
+          <p>It started during my internship and it's still the first place I try a backend idea before it goes anywhere near Cosmos.</p>
+          <div class="stack">Java 17, Spring Boot 3.4, Spring Data JPA, Hibernate, MySQL 8, JSP, Bootstrap, JavaMail, Maven</div>
+          <div class="closed">Private repo.</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="exp">
+    <div class="col">
+      <div class="head veil"><h2>Experience</h2><span>three roles</span></div>
+
+      <div class="job veil">
+        <div class="when">Sept 2026 — now</div>
+        <div>
+          <h3>Global Student Mentor</h3>
+          <div class="org">Northeastern University, Office of Global Services</div>
+          <ul>
+            <li>Mentor a cohort of incoming international graduate students through their first semester, on campus and in a new country</li>
+            <li>Run monthly group sessions and weekly outreach by text, email, and the mentorship platform</li>
+            <li>Coordinate the online mentor curriculum, contributing content and interface improvements to the learning modules</li>
+            <li>Produce social posts, email campaigns, and graphics for the office's channels, and work events end to end</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job veil">
+        <div class="when">May — June 2026</div>
+        <div>
+          <h3>Teaching Assistant, Mobile Application Development</h3>
+          <div class="org">Northeastern University, Khoury College</div>
+          <ul>
+            <li>Debugged live with 60+ students across 15 topics in a fully asynchronous Kotlin-first course</li>
+            <li>Taught MVVM and unidirectional data flow, offline-first persistence, networking, and release workflow</li>
+            <li>Held the line on a staged AI policy: show you understand the concept unaided, then use the tools</li>
+            <li>Maintained course material across Jetpack Compose, Material 3, coroutines and Flow, Retrofit, Room, Firebase, DataStore, Maps, and CameraX</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job veil">
+        <div class="when">Jan — Apr 2025</div>
+        <div>
+          <h3>Backend Software Engineer Intern</h3>
+          <div class="org">Grownited Private Limited, Ahmedabad</div>
+          <ul>
+            <li>Shipped a full-stack expense platform in Java, Spring Boot, and MySQL that an internal team used daily</li>
+            <li>Delivered 15+ REST endpoints behind JWT authentication and role-based access control</li>
+            <li>Cut latency on the slowest endpoints with composite indexes and by removing N+1 queries through lazy loading</li>
+            <li>Restructured the service into layered MVC with DTOs and dependency injection</li>
+            <li>Worked as a full member of a five-person team on two-week sprints, with standups and code review</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ ABOUT ============ -->
-  <section class="page" data-page="about">
-    <div class="wrap">
-      <p class="callout"><span class="idx">03</span> · operator profile</p>
-      <h2>About</h2>
-      <div class="about-grid">
-        <div class="prose">
-          <p><b>I build backend systems and I care how they behave under load.</b> Not just whether an endpoint returns 200, but the query plan behind it, the filter that sits in front of it, and what happens when the traffic isn't friendly.</p>
-          <p>I'm an MSCS student at Northeastern in Boston. Most of my work lives in the Java / Spring ecosystem on top of PostgreSQL, with a soft spot for the security layer — WAFs, auth, rate limiting — because that's where correctness actually gets tested.</p>
-          <p>My rule for projects is <b>brick by brick, always deployed</b>: get one real slice working end to end and shipped before adding the next. It keeps the defect count low and the demo honest.</p>
-          <p>Right now I'm looking for a <b>Fall 2026 software engineering co-op</b>.</p>
-        </div>
-        <div class="toolchain">
-          <div class="th">toolchain</div>
-          <div class="toolrow"><div class="k">Lang</div><div class="v">Java · Python · SQL</div></div>
-          <div class="toolrow"><div class="k">Frame</div><div class="v">Spring Boot · Spring Security</div></div>
-          <div class="toolrow"><div class="k">Data</div><div class="v">PostgreSQL · MySQL · Redis</div></div>
-          <div class="toolrow"><div class="k">Infra</div><div class="v">AWS · Docker</div></div>
-          <div class="toolrow"><div class="k">Focus</div><div class="v">APIs · auth · rate limiting</div></div>
-        </div>
+  <section id="kit">
+    <div class="col">
+      <div class="head veil"><h2>Toolchain</h2><span>what I've actually used</span></div>
+      <div class="kit veil">
+        <div class="line"><div class="k">Languages</div><div class="v"><b>Java</b>, Kotlin, Swift, Python, C++, SQL, JavaScript, Dart</div></div>
+        <div class="line"><div class="k">Backend</div><div class="v"><b>Spring Boot</b>, Spring Security, Hibernate and JPA, REST APIs, JWT, OAuth2, Thymeleaf, JSP</div></div>
+        <div class="line"><div class="k">Mobile</div><div class="v">Android with Jetpack Compose, coroutines and Flow, Room, Retrofit, Firebase, CameraX; iOS with Swift, MapKit, Core Location</div></div>
+        <div class="line"><div class="k">Data</div><div class="v"><b>PostgreSQL</b>, MySQL, Redis, MongoDB, Flyway migrations, schema design, indexing, query plans</div></div>
+        <div class="line"><div class="k">Systems</div><div class="v">Linux, systemd, Caddy, Docker, Oracle Cloud ARM64, Git, Maven, CI/CD</div></div>
+        <div class="line"><div class="k">Security</div><div class="v">OWASP Top 10, injection and XSS prevention, rate limiting, RBAC, two-factor flows, secrets handling</div></div>
+        <div class="line"><div class="k">AI tooling</div><div class="v">Claude API through the official Java SDK, Model Context Protocol, agent-driven refactors verified against tests</div></div>
+        <div class="line"><div class="k">Fundamentals</div><div class="v">Algorithms and complexity, object-oriented design, design patterns, concurrency, distributed systems</div></div>
+        <div class="line"><div class="k">Practice</div><div class="v">JUnit, integration testing, code review, Agile, technical writing</div></div>
       </div>
     </div>
   </section>
 
-  <!-- ============ LOG ============ -->
-  <section class="page" data-page="log">
-    <div class="wrap">
-      <p class="callout"><span class="idx">04</span> · event log</p>
-      <h2>Log</h2>
-      <p class="intro">A chronological record. Newest first. <span style="color:var(--dim-2)">(Fill in exact titles and dates before you ship.)</span></p>
-      <div class="log">
-        <div class="entry now">
-          <div class="when">2025 — present</div>
-          <h3>MSCS, Northeastern University</h3>
-          <div class="org">Boston, MA</div>
-          <p>Graduate coursework in algorithms, database management, mobile development, and programming design paradigms.</p>
+  <section id="edu">
+    <div class="col">
+      <div class="head veil"><h2>Education</h2><span>and the certificates worth naming</span></div>
+
+      <div class="edu veil">
+        <div class="when">Sept 2025 — Dec 2027</div>
+        <div>
+          <h3>Northeastern University, Khoury College</h3>
+          <div class="deg">Master of Science, Computer Science</div>
+          <p>In Boston since August 2025.</p>
+          <div class="courses">Distributed systems, with assignments in concurrent C++11 on Linux. Cloud computing. Database management systems. Mobile application development, built in Swift. Programming design paradigms.</div>
         </div>
-        <div class="entry">
-          <div class="when">Internship</div>
-          <h3>Backend Engineer</h3>
-          <div class="org">— add employer —</div>
-          <p>Built and maintained backend services for a platform serving ~500 users; Spring Boot, PostgreSQL, and Redis with a Spring Security auth layer.</p>
+      </div>
+
+      <div class="edu veil">
+        <div class="when">Nov 2021 — May 2025</div>
+        <div>
+          <h3>Gujarat Technological University</h3>
+          <div class="deg">Bachelor of Engineering, Computer Science and Engineering</div>
+          <p>First Class with Distinction, CGPA 8.33 of 10, at New L.J. Institute of Engineering and Technology, Ahmedabad.</p>
+          <div class="courses">Data structures, algorithms, operating systems, computer networks, database management, object-oriented programming.</div>
         </div>
-        <div class="entry">
-          <div class="when">Ongoing</div>
-          <h3>Shipping side systems</h3>
-          <div class="org">CyberGuard Gateway · SpendSmart</div>
-          <p>Designing, building, and deploying the projects in the registry — security tooling and a finance API with a community layer.</p>
-        </div>
+      </div>
+
+      <div class="certs veil">
+        <div class="c"><div>Building with the Claude API — completed in Java using the official SDKs, not the course's Python</div><span>Anthropic, 2026</span></div>
+        <div class="c"><div>Model Context Protocol, advanced topics</div><span>Anthropic, 2026</span></div>
+        <div class="c"><div>Oracle Cloud Infrastructure Certified Foundations Associate</div><span>Oracle, 2025</span></div>
+        <div class="c"><div>Google Cloud Computing Foundations</div><span>Google, 2025</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ============ CONTACT ============ -->
-  <section class="page" data-page="contact">
-    <div class="wrap contact-wrap">
-      <p class="callout"><span class="idx">05</span> · open channel</p>
-      <h2>Contact</h2>
-      <p class="prompt">open to Fall 2026 SWE co-op — reach me on any channel</p>
-      <div class="clinks">
-        <a class="clink" href="mailto:bhavantrivedi05@gmail.com">
-          <span class="k">Email</span><span class="v">bhavantrivedi05@gmail.com</span><span class="arw">↗</span>
-        </a>
-        <a class="clink" href="https://github.com/BhavanTrivedi05" target="_blank" rel="noopener">
-          <span class="k">GitHub</span><span class="v">BhavanTrivedi05</span><span class="arw">↗</span>
-        </a>
-        <a class="clink" href="https://www.linkedin.com/in/bhavan-trivedi-012714232/" target="_blank" rel="noopener">
-          <span class="k">LinkedIn</span><span class="v">in/bhavan-trivedi</span><span class="arw">↗</span>
-        </a>
+  <section id="reach" class="reach">
+    <div class="col">
+      <div class="head veil"><h2>Contact</h2><span>any of these reaches me</span></div>
+      <div class="lines veil">
+        <a href="mailto:bhavantrivedi05@gmail.com"><span class="k">Email</span><span class="v">bhavantrivedi05@gmail.com</span></a>
+        <a href="https://github.com/BhavanTrivedi05" target="_blank" rel="noopener"><span class="k">GitHub</span><span class="v">github.com/BhavanTrivedi05</span></a>
+        <a href="https://www.linkedin.com/in/bhavan-trivedi-012714232/" target="_blank" rel="noopener"><span class="k">LinkedIn</span><span class="v">linkedin.com/in/bhavan-trivedi-012714232</span></a>
       </div>
     </div>
   </section>
+
+  <footer>
+    <div class="col">Bhavan Trivedi — Boston, Massachusetts</div>
+  </footer>
+
 </main>
-
-<footer>
-  <div class="wrap">
-    <span>bhavan trivedi · systems engineer · boston</span>
-    <span class="ok">// compiled with care · 0 known defects</span>
-    <span id="year"></span>
-  </div>
-</footer>
 
 <script>
 (function(){
-  /* ---------- clock ---------- */
-  var clk=document.getElementById('clock');
-  function tick(){var d=new Date();clk.textContent=d.toTimeString().slice(0,8);}
-  tick();setInterval(tick,1000);
-  document.getElementById('year').textContent=new Date().getFullYear();
+  document.body.classList.add('loaded');
 
-  /* ---------- router ---------- */
-  var pages=document.querySelectorAll('.page');
-  var navs=document.querySelectorAll('nav a[data-nav]');
-  function route(){
-    var id=(location.hash||'#index').slice(1);
-    var found=false;
-    pages.forEach(function(p){
-      var on=p.getAttribute('data-page')===id;
-      p.classList.toggle('active',on); if(on)found=true;
+  var bar  = document.getElementById('bar');
+  var hero = document.querySelector('.hero');
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(e){
+      bar.classList.toggle('on', !e[0].isIntersecting);
+    }, {rootMargin:'-70px 0px 0px 0px'}).observe(hero);
+
+    var reveal = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){ en.target.classList.add('seen'); reveal.unobserve(en.target); }
+      });
+    }, {rootMargin:'0px 0px -8% 0px', threshold:0.06});
+
+    document.querySelectorAll('.veil').forEach(function(el){ reveal.observe(el); });
+  } else {
+    document.querySelectorAll('.veil').forEach(function(el){ el.classList.add('seen'); });
+    window.addEventListener('scroll', function(){
+      bar.classList.toggle('on', window.scrollY > 280);
     });
-    if(!found){pages[0].classList.add('active');id='index';}
-    navs.forEach(function(a){
-      if(a.getAttribute('data-nav')===id)a.setAttribute('aria-current','page');
-      else a.removeAttribute('aria-current');
-    });
-    window.scrollTo(0,0);
-  }
-  window.addEventListener('hashchange',route);
-  route();
-
-  /* ---------- signature: live request pipeline ---------- */
-  var canvas=document.getElementById('pipe');
-  var ctx=canvas.getContext('2d');
-  var C={void:'#0A0C0E',line:'#1E252B',ink:'#C7D0D6',dim:'#6B7780',dim2:'#48525A',
-         phos:'#4BD6A0',phosDim:'#2E7D5F',alert:'#E5484D'};
-  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  var W,H,dpr;
-  var nodes=[];               // pipeline stages
-  var STAGES=['CLIENT','GATEWAY','SERVICE','POSTGRES'];
-  function layout(){
-    dpr=Math.min(window.devicePixelRatio||1,2);
-    var r=canvas.getBoundingClientRect();
-    W=r.width;H=r.height;
-    canvas.width=W*dpr;canvas.height=H*dpr;
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    var padX=46, top=H*0.42;
-    nodes=STAGES.map(function(name,i){
-      return {name:name,x:padX+(W-2*padX)*(i/(STAGES.length-1)),y:top};
-    });
-  }
-  layout();
-  if(window.ResizeObserver){new ResizeObserver(layout).observe(canvas);}
-  else{window.addEventListener('resize',layout);}
-
-  /* packets */
-  var packets=[];
-  var counters={total:0,blocked:0,rps:0,windowStart:performance.now(),windowCount:0};
-  var latHist=[];             // control-chart samples
-  var LAT_N=40, LAT_UCL=0.82, LAT_LCL=0.18; // normalized control limits
-  for(var i=0;i<LAT_N;i++)latHist.push(0.5);
-
-  function spawn(){
-    var blocked=Math.random()<0.16;                 // WAF block rate ~16%
-    packets.push({t:0, blocked:blocked, dead:false, flash:0, seg:0});
-    counters.total++; counters.windowCount++;
-    if(blocked)counters.blocked++;
-    // push a latency sample within limits, occasional near-edge point
-    var base=0.42+Math.random()*0.22;
-    if(Math.random()<0.08)base=0.68+Math.random()*0.12;
-    latHist.push(base); if(latHist.length>LAT_N)latHist.shift();
-  }
-
-  function seg(i){ // segment i between node i and i+1, returns {a,b}
-    return {a:nodes[i], b:nodes[i+1]};
-  }
-
-  function drawNode(n,active){
-    var w=n.name.length*7.4+18, h=26, x=n.x-w/2, y=n.y-h/2;
-    ctx.strokeStyle=active?C.phos:C.line;
-    ctx.fillStyle=C.void;
-    ctx.lineWidth=1;
-    ctx.beginPath();ctx.rect(x,y,w,h);ctx.fill();ctx.stroke();
-    ctx.fillStyle=active?C.phos:C.dim;
-    ctx.font='10px "IBM Plex Mono",monospace';
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(n.name,n.x,n.y);
-    // tick under node (dimension mark)
-    ctx.strokeStyle=C.line;ctx.beginPath();
-    ctx.moveTo(n.x,y+h+6);ctx.lineTo(n.x,y+h+11);ctx.stroke();
-  }
-
-  function drawWire(a,b){
-    ctx.strokeStyle=C.line;ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(a.x+ (b.x>a.x?26:-26),a.y);ctx.lineTo(b.x-26,b.y);ctx.stroke();
-  }
-
-  function drawControlChart(){
-    // small chart bottom-left: process-control (six sigma) nod
-    var x0=42, y0=H*0.80, w=W*0.44, h=H*0.13;
-    // limit lines
-    ctx.strokeStyle=C.line;ctx.setLineDash([3,4]);ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(x0,y0-h*LAT_UCL);ctx.lineTo(x0+w,y0-h*LAT_UCL);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(x0,y0-h*LAT_LCL);ctx.lineTo(x0+w,y0-h*LAT_LCL);ctx.stroke();
-    ctx.setLineDash([]);
-    // center line
-    ctx.strokeStyle=C.dim2;ctx.beginPath();ctx.moveTo(x0,y0-h*0.5);ctx.lineTo(x0+w,y0-h*0.5);ctx.stroke();
-    // samples
-    ctx.strokeStyle=C.phosDim;ctx.lineWidth=1;ctx.beginPath();
-    for(var i=0;i<latHist.length;i++){
-      var px=x0+w*(i/(latHist.length-1));
-      var py=y0-h*Math.max(0.05,Math.min(0.95,latHist[i]));
-      if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
-    }
-    ctx.stroke();
-    // labels
-    ctx.fillStyle=C.dim2;ctx.font='9px "IBM Plex Mono",monospace';ctx.textAlign='left';
-    ctx.fillText('UCL',x0+w+6,y0-h*LAT_UCL);
-    ctx.fillText('LCL',x0+w+6,y0-h*LAT_LCL);
-    ctx.textBaseline='top';
-    ctx.fillText('latency · statistical process control',x0,y0+6);
-    ctx.textBaseline='middle';
-  }
-
-  var lastSpawn=0;
-  function frame(now){
-    ctx.clearRect(0,0,W,H);
-
-    // wires + nodes
-    for(var i=0;i<nodes.length-1;i++)drawWire(nodes[i],nodes[i+1]);
-
-    // spawn cadence
-    if(!reduce && now-lastSpawn>520){lastSpawn=now;spawn();}
-
-    // update + draw packets
-    var gatewayActive=false, dbActive=false;
-    for(var p of packets){
-      if(p.dead)continue;
-      p.t+=reduce?0:0.0065;
-      var totalSeg=nodes.length-1;
-      var pos=p.t*totalSeg;                 // 0..totalSeg
-      var si=Math.floor(pos);
-      // block at gateway (node index 1)
-      if(p.blocked && pos>=1){
-        p.flash+=0.08;
-        var g=nodes[1];
-        gatewayActive=true;
-        var a=Math.max(0,1-p.flash);
-        ctx.fillStyle=C.alert;ctx.globalAlpha=a;
-        ctx.fillRect(g.x-3,g.y-3,6,6);
-        ctx.globalAlpha=1;
-        ctx.fillStyle=C.alert;ctx.font='9px "IBM Plex Mono",monospace';
-        ctx.textAlign='center';ctx.globalAlpha=a;
-        ctx.fillText('403',g.x,g.y-20);ctx.globalAlpha=1;
-        if(p.flash>=1)p.dead=true;
-        continue;
-      }
-      if(si>=totalSeg){ // reached postgres
-        dbActive=true;
-        var d=nodes[nodes.length-1];
-        ctx.fillStyle=C.phos;ctx.font='9px "IBM Plex Mono",monospace';ctx.textAlign='center';
-        ctx.fillText('200',d.x,d.y-20);
-        p.dead=true;continue;
-      }
-      if(si===1)gatewayActive=true;
-      var s=seg(si);
-      var f=pos-si;
-      var ax=s.a.x+(s.a===nodes[0]?26:26)*(s.b.x>s.a.x?1: -1); // start just past node
-      var startX=s.a.x+26, endX=s.b.x-26;
-      var px=startX+(endX-startX)*f;
-      // packet glyph
-      ctx.fillStyle=C.phos;
-      ctx.fillRect(px-2.5,s.a.y-2.5,5,5);
-      ctx.globalAlpha=0.25;ctx.fillRect(px-6,s.a.y-1,4,2);ctx.globalAlpha=1; // trail
-    }
-    packets=packets.filter(function(p){return !p.dead});
-
-    // nodes on top
-    for(var i=0;i<nodes.length;i++){
-      var act=(i===1&&gatewayActive)||(i===nodes.length-1&&dbActive)||(i===0);
-      drawNode(nodes[i], i===0?false:act);
-    }
-
-    // control chart
-    drawControlChart();
-
-    // rps window (1s)
-    if(now-counters.windowStart>1000){
-      counters.rps=counters.windowCount;
-      counters.windowCount=0;counters.windowStart=now;
-      updateStats();
-    }
-
-    if(!reduce)requestAnimationFrame(frame);
-  }
-
-  function updateStats(){
-    document.getElementById('s-rps').innerHTML=counters.rps+' <small>req/s</small>';
-    var br=counters.total? (counters.blocked/counters.total*100):0;
-    document.getElementById('s-block').innerHTML=br.toFixed(1)+'<small>%</small>';
-    // p99-ish from latHist
-    var sorted=latHist.slice().sort(function(a,b){return a-b});
-    var p99=sorted[Math.floor(sorted.length*0.99)-0]||sorted[sorted.length-1];
-    var ms=Math.round(20+p99*180);
-    var el=document.getElementById('s-p99');
-    var over=p99>LAT_UCL;
-    el.className='val'+(over?'':' ok');
-    el.innerHTML=ms+' <small>'+(over?'CHECK':'within limits')+'</small>';
-  }
-
-  if(reduce){
-    // static single frame with a few placed packets
-    for(var i=0;i<3;i++)spawn();
-    packets[0].t=0.35;packets[1].t=1.6/3;packets[2].t=2.4/3;
-    frame(performance.now());
-    counters.rps=42;updateStats();
-  }else{
-    requestAnimationFrame(frame);
   }
 })();
 </script>
