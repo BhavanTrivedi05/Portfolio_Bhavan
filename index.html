@@ -213,12 +213,12 @@
   <header class="hero">
     <div class="col">
       <h1 class="rise d1">Software engineer.</h1>
-      <p class="lede rise d2">I've shipped <b>backend services</b>, an <b>iOS app</b>, a <b>desktop tool on a relational schema</b> I designed, and I taught <b>Android</b> to sixty students. Backend is where I'm deepest — it isn't the whole of what I do.</p>
-      <div class="rise d3"><span class="status"><i></i>Open to a Spring 2027 software engineering co-op</span></div>
+      <p class="lede rise d2">I build <b>backend services</b>, a <b>motorsport news platform</b> with its own security layer, a <b>personal finance app</b>, and a <b>desktop tool</b> on a relational schema I designed. I've also built an <b>iOS app</b> and taught <b>Android</b> to sixty students. Backend is where I'm deepest — it isn't the whole of what I do.</p>
+      <div class="rise d3"><span class="status"><i></i>Open to a Spring 2027 co-op and full-time roles</span></div>
       <div class="facts rise d4">
         <div><div class="v">Boston, Massachusetts</div><div class="l">Based</div></div>
         <div><div class="v">MS Computer Science</div><div class="l">Northeastern, Dec 2027</div></div>
-        <div><div class="v">Java, Kotlin, Swift, Python, C++</div><div class="l">Languages I've shipped in</div></div>
+        <div><div class="v">Java, Kotlin, Swift, Python, C++</div><div class="l">Languages I've built in</div></div>
       </div>
     </div>
   </header>
@@ -226,7 +226,7 @@
   <section id="work">
     <div class="col">
       <div class="head veil"><h2>Work</h2><span>five projects, what each one actually is</span></div>
-      <p class="sect-note veil">Two are running now, one is coursework in progress, two are finished. Where a repo is private I've said so rather than link you somewhere closed.</p>
+      <p class="sect-note veil">Two are my own and in active development, one is team coursework in progress, and two are finished. Where a repo is private I've said so rather than link you somewhere closed.</p>
 
       <div class="work">
 
@@ -236,26 +236,46 @@
             <div class="term">Aug 2026 — now</div>
           </div>
           <div class="kind">Motorsport news and community platform</div>
-          <p>A news reader for motorsport across every series, with reaction-based discussion on stories. I designed the schema, wrote the service, and deployed it to a free-tier ARM machine where it runs under systemd behind Caddy. Live commenting, car and tech explainers, and a wider platform are what I'm building toward.</p>
-          <p>It grew out of an older codebase of mine, which I audited before building anything on top of it. Eight security defects: a credential committed to the repo, a path to taking over an admin account, passwords stored in plaintext, and a rate limiter that never limited anything. I fixed them one at a time with an AI coding agent driving, checking every change against the test suite.</p>
-          <p>I also measured what running in a container would cost me in memory against the RAM the free tier gives me, and ran the service under systemd instead of defaulting to Docker.</p>
+          <p>A news reader for every racing series. Every minute a scheduler checks which of ten feeds is due, fetches it, and merges the same headline from different outlets into one story using PostgreSQL trigram matching. A race calendar covers F1, MotoGP, IndyCar, and WEC, and readers react to stories Reddit-style. Every page is rendered on the server.</p>
+          <p>Every request passes through CyberGuard, the security layer at its core: security headers, IP blocking, rate limiting, SQL injection and XSS checks, CSRF protection, and JWT-based access rules, in that order. CyberGuard began as a separate gateway project of mine. Before building on it, I audited it and found eight defects, including a credential committed to the repo, a path to taking over an admin account, passwords stored in plaintext, and a rate limiter that never limited anything. I fixed them one at a time with Claude Code, checking every change against the test suite.</p>
+          <p>It's built to run lean on one small server. I measured what a container would cost in memory against the 1 GB I'll have, and set it up to run under systemd behind Caddy instead, with the deploy runbook already written. Automated accessibility checks run in CI, because I want blind and low-vision fans to be able to use it with a screen reader.</p>
+          <p>Next is launch, then live commenting, car and tech explainers, and live timing with cars moving around the track.</p>
           <div class="marks">
+            <div><div class="n"><em>10</em></div><div class="c">news feeds</div></div>
+            <div><div class="n"><em>4</em></div><div class="c">race calendars</div></div>
             <div><div class="n"><em>8</em></div><div class="c">defects fixed</div></div>
             <div><div class="n">46 → <em>52</em></div><div class="c">passing tests</div></div>
-            <div><div class="n"><em>9</em></div><div class="c">commits</div></div>
-            <div><div class="n"><em>1</em> box</div><div class="c">ARM64, free tier</div></div>
           </div>
-          <div class="stack">Java 21, Spring Boot 3.5, Hibernate, Thymeleaf, PostgreSQL 17, Flyway, Oracle Cloud ARM64, systemd, Caddy</div>
-          <div class="closed">Private while I get it presentable. Happy to walk through the code.</div>
+          <div class="stack">Java 21, Spring Boot 3.5, Hibernate, Thymeleaf, PostgreSQL 17, Flyway, Selenium with axe-core, systemd, Caddy</div>
+          <div class="closed">Private until launch. Happy to walk through the code.</div>
         </article>
 
         <article class="proj veil">
           <div class="proj-top">
-            <h3>Cloud security platform</h3>
-            <div class="term">Fall 2026</div>
+            <h3>SpendWise</h3>
+            <div class="term">May 2025 — now</div>
+          </div>
+          <div class="kind">Personal finance app, being rebuilt as a standalone product</div>
+          <p>Expenses, accounts, categories, and vendors, with filtered reporting, a dashboard, and exports. Every query checks ownership, so an account only ever reads its own rows. Roles keep admins and users apart, passwords are hashed with BCrypt, and password recovery works through a one-time code sent by email.</p>
+          <p>It began as the expense platform I built during my internship, and I'm turning it into a product of my own. It runs on PostgreSQL with Flyway migrations and optimistic locking, behind about 270 tests. When I reviewed it again in October, I found real problems, from money stored as floating point to a race in password-reset attempts, and I'm fixing them one at a time, each with its own test.</p>
+          <p>Next: email verification, a mobile layout, and a background model in Python that learns spending patterns and suggests where to cut back. No chatbot, nothing to talk to.</p>
+          <div class="marks">
+            <div><div class="n">~<em>270</em></div><div class="c">tests</div></div>
+            <div><div class="n"><em>4</em></div><div class="c">core services</div></div>
+            <div><div class="n"><em>2</em></div><div class="c">roles, kept apart</div></div>
+          </div>
+          <div class="stack">Java 17, Spring Boot, Spring Data JPA, Hibernate, PostgreSQL, Flyway, JSP, Bootstrap, JavaMail, nginx, Maven</div>
+          <div class="closed">Private for now.</div>
+        </article>
+
+        <article class="proj veil">
+          <div class="proj-top">
+            <h3>CodeGuard Cloud</h3>
+            <div class="term">Sep 2026 — now</div>
           </div>
           <div class="kind">Graduate coursework, three-person team, in progress</div>
-          <p>A security platform on AWS built around a static analysis scanner and a set of API penetration testing tools. Our angle is a protective layer that sits in front of an application without the application having to change — the principle I took from an earlier firewall project of mine, rebuilt rather than reused.</p>
+          <p>A serverless platform on AWS for analyzing code and checking APIs, built on a static analysis scanner and API penetration testing tools provided by the course. My part is the static-analysis worker and the private file storage behind it.</p>
+          <p>Our goal is a protective layer that sits in front of an application without the application having to change. The idea comes from CyberGuard, but we're designing it from scratch rather than reusing that code.</p>
           <div class="stack">AWS, Node.js, Express</div>
         </article>
 
@@ -286,18 +306,6 @@
           <p>An iOS app for coordinating rides between students. I led the team from scope through delivery and wrote the matching logic that assigns riders to drivers under time and capacity constraints, plus Firebase authentication with email verification and session handling, and pickup and dropoff coordination through Core Location and MapKit.</p>
           <p>It was a semester project and it stayed a prototype. I'm including it because it's the clearest evidence I pick up an unfamiliar platform quickly: I had not written Swift before the course started.</p>
           <div class="stack">Swift, Xcode, Firebase Authentication, Core Location, MapKit</div>
-        </article>
-
-        <article class="proj veil">
-          <div class="proj-top">
-            <h3>Expense Tracker</h3>
-            <div class="term">May 2025 — now</div>
-          </div>
-          <div class="kind">Full-stack expense management</div>
-          <p>Expenses, accounts, categories and subcategories, and vendors, with date and category filtered reporting and a dashboard summary. Passwords hashed with BCrypt, password recovery through a one-time code sent by email, admin and user roles kept apart, and every account reading only its own rows.</p>
-          <p>It started during my internship and it's still the first place I try a backend idea before it goes anywhere near Cosmos.</p>
-          <div class="stack">Java 17, Spring Boot 3.4, Spring Data JPA, Hibernate, MySQL 8, JSP, Bootstrap, JavaMail, Maven</div>
-          <div class="closed">Private repo.</div>
         </article>
 
       </div>
@@ -342,10 +350,11 @@
           <h3>Backend Software Engineer Intern</h3>
           <div class="org">Grownited Private Limited, Ahmedabad</div>
           <ul>
-            <li>Shipped a full-stack expense platform in Java, Spring Boot, and MySQL that an internal team used daily</li>
+            <li>Designed the backend of an internal expense-tracking platform for company staff, in Java, Spring Boot, and MySQL</li>
+            <li>Owned the backend design end to end, refining it through constant review with senior engineers</li>
             <li>Delivered 15+ REST endpoints behind JWT authentication and role-based access control</li>
-            <li>Cut latency on the slowest endpoints with composite indexes and by removing N+1 queries through lazy loading</li>
-            <li>Restructured the service into layered MVC with DTOs and dependency injection</li>
+            <li>Cut latency on the slowest endpoints by removing N+1 queries and adding composite indexes</li>
+            <li>Structured the code as controllers, services, and repositories with DTOs, and covered each service with JUnit tests</li>
             <li>Worked as a full member of a five-person team on two-week sprints, with standups and code review</li>
           </ul>
         </div>
@@ -358,14 +367,14 @@
       <div class="head veil"><h2>Toolchain</h2><span>what I've actually used</span></div>
       <div class="kit veil">
         <div class="line"><div class="k">Languages</div><div class="v"><b>Java</b>, Kotlin, Swift, Python, C++, SQL, JavaScript, Dart</div></div>
-        <div class="line"><div class="k">Backend</div><div class="v"><b>Spring Boot</b>, Spring Security, Hibernate and JPA, REST APIs, JWT, OAuth2, Thymeleaf, JSP</div></div>
+        <div class="line"><div class="k">Backend</div><div class="v"><b>Spring Boot</b>, Spring Security, Hibernate and JPA, REST APIs, JWT, Thymeleaf, JSP</div></div>
         <div class="line"><div class="k">Mobile</div><div class="v">Android with Jetpack Compose, coroutines and Flow, Room, Retrofit, Firebase, CameraX; iOS with Swift, MapKit, Core Location</div></div>
-        <div class="line"><div class="k">Data</div><div class="v"><b>PostgreSQL</b>, MySQL, Redis, MongoDB, Flyway migrations, schema design, indexing, query plans</div></div>
-        <div class="line"><div class="k">Systems</div><div class="v">Linux, systemd, Caddy, Docker, Oracle Cloud ARM64, Git, Maven, CI/CD</div></div>
-        <div class="line"><div class="k">Security</div><div class="v">OWASP Top 10, injection and XSS prevention, rate limiting, RBAC, two-factor flows, secrets handling</div></div>
-        <div class="line"><div class="k">AI tooling</div><div class="v">Claude API through the official Java SDK, Model Context Protocol, agent-driven refactors verified against tests</div></div>
+        <div class="line"><div class="k">Data</div><div class="v"><b>PostgreSQL</b>, MySQL, Flyway migrations, schema design, indexing, query plans, trigram matching</div></div>
+        <div class="line"><div class="k">Systems</div><div class="v">Linux, systemd, Caddy, nginx, Docker, AWS, Git, Maven, CI</div></div>
+        <div class="line"><div class="k">Security</div><div class="v">Security audits, OWASP Top 10, injection and XSS prevention, CSRF, rate limiting, RBAC, secrets handling</div></div>
+        <div class="line"><div class="k">AI tooling</div><div class="v">Claude Code, with every change checked against tests; the Claude API through the official Java SDK, and Model Context Protocol</div></div>
         <div class="line"><div class="k">Fundamentals</div><div class="v">Algorithms and complexity, object-oriented design, design patterns, concurrency, distributed systems</div></div>
-        <div class="line"><div class="k">Practice</div><div class="v">JUnit, integration testing, code review, Agile, technical writing</div></div>
+        <div class="line"><div class="k">Practice</div><div class="v">JUnit, integration testing, accessibility testing with axe-core, code review, Agile, technical writing</div></div>
       </div>
     </div>
   </section>
@@ -379,8 +388,8 @@
         <div>
           <h3>Northeastern University, Khoury College</h3>
           <div class="deg">Master of Science, Computer Science</div>
-          <p>In Boston since August 2025.</p>
-          <div class="courses">Distributed systems, with assignments in concurrent C++11 on Linux. Cloud computing. Database management systems. Mobile application development, built in Swift. Programming design paradigms.</div>
+          <p>In Boston since August 2025. Graduating in December 2027 with a co-op term, or May 2027 without one.</p>
+          <div class="courses">Distributed systems, with assignments in concurrent C++11 on Linux. Cloud computing on AWS. Algorithms. Database management systems. Mobile application development, built in Swift. Programming design paradigms.</div>
         </div>
       </div>
 
